@@ -71,11 +71,7 @@ def main():
                 to="+13059679060",
                 from_="+17866614259")
 
-        # Only send out a tweet at 11am EST (1000 GMT) and 6pm EST (1800 GMT)
-        if(time.gmtime().tm_hour == 15):
-            time.sleep(25200) # Tweet again at 6pm
-        elif(time.gmtime().tm_hour == 22):
-            time.sleep(61200) # Tweet again at 11am
+            time.sleep(21600) # Every 6 hours
 
 if __name__ == '__main__':
     main()
