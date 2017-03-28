@@ -33,18 +33,29 @@ def main():
             images.append('images/'+image)
 
     # Keep tweeting while there are things to tweet
-    while(len(quotes) > 0 or len(images) > 0): 
+    while(len(quotes) > 0): 
         # Tweet one image for every 10 quotes
-        if(tweetedQuotes < 10):
-            tweet = random.choice(quotes)
+        if(tweetedQuotes < 10 and quotes is not None):
+            if(len(quotes) == 1):
+                tweet = quotes[0]
+            elif(len(quotes) < 1):
+                continue      
+            elif(len(quotes) > 1):
+                tweet = random.choice(quotes)
             tweetIndex = quotes.index(tweet)
             api.PostUpdate(tweet)
+            print("QUOTE")
+            print(len(quotes))
+            print(tweetIndex)
             del quotes[tweetIndex]
             tweetedQuotes += 1
-        elif(tweetedQuotes >= 10):
+        elif((tweetedQuotes >= 10 and images is not None) or (quotes is None)):
             tweet = random.choice(images)
             tweetIndex = images.index(tweet)
             api.PostUpdate('',image)
+            print("IMAGE")
+            print(len(images))
+            print(tweetIndex)
             del images[tweetIndex]
             tweetedQuotes = 0
 
@@ -61,9 +72,9 @@ def main():
                 from_="+17866614259")
 
         # Only send out a tweet at 11am EST (1000 GMT) and 6pm EST (1800 GMT)
-        if(time.gmtime().tm_hour == 10):
+        if(time.gmtime().tm_hour == 15):
             time.sleep(25200) # Tweet again at 6pm
-        elif(time.gmtime().tm_hour == 18):
+        elif(time.gmtime().tm_hour == 22):
             time.sleep(61200) # Tweet again at 11am
 
 if __name__ == '__main__':
