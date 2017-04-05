@@ -33,6 +33,7 @@ def main():
             images.append('images/'+image)
 
     # Keep tweeting while there are things to tweet
+    startTime = time.time()
     while(len(quotes) > 0): 
         # Tweet one image for every 10 quotes
         if(tweetedQuotes < 10 and quotes is not None):
@@ -71,7 +72,7 @@ def main():
                 to="+13059679060",
                 from_="+17866614259")
 
-            time.sleep(21600) # Every 6 hours
+        time.sleep(21600.0 - ((time.time() - startTime) % 21600.0)) # Every 6 hours
 
 if __name__ == '__main__':
     main()
